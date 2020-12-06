@@ -13,6 +13,7 @@ Application::~Application()
 {
     delete main_window;
     delete text_parser;
+    delete connection_manager;
 }
 
 void Application::newInstance()
