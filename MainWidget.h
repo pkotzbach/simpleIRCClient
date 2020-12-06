@@ -16,11 +16,11 @@ public:
     explicit MainWidget(QMainWindow* parent = nullptr);
 
 signals:
-    void newMessageIn(QString message, GLOBAL::Dest dest);
+    void newMessageIn(QString& message, GLOBAL::Dest dest);
     void newMessageOut(QString message);
 
 private slots:
-    void gotMessage(QString message, GLOBAL::Dest dest);
+    void gotMessage(QString& message, GLOBAL::Dest dest);
     void parseMyNewMessage(QString message);
 
 private:

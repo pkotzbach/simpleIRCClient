@@ -7,7 +7,7 @@ TextParser::TextParser()
     options.channel = ""; //FIXME: GLOBAL::defaultchannel
 }
 
-void TextParser::transportMessage(QString message, GLOBAL::Dest dest)
+void TextParser::transportMessage(QString& message, GLOBAL::Dest dest)
 {
     if (message.size() > 0)
     {
@@ -17,12 +17,13 @@ void TextParser::transportMessage(QString message, GLOBAL::Dest dest)
     //else do nothing i guess
 }
 
-void TextParser::prepAndSendIn(QString input)
+void TextParser::prepAndSendIn(QString& input)
 {
     if (input.startsWith(GLOBAL::commandChar)) {
         input.remove(0, 1);
 
-        emit commandSend(input.split(QString(" "), Qt::SkipEmptyParts), input);
+        auto temp = input.split(QString(" "), Qt::SkipEmptyParts);
+        emit commandSend(temp, input);
     }
     else {
         input.prepend(QString("privmsg ") + options.channel + QString(" :")); //FIXME
@@ -31,7 +32,7 @@ void TextParser::prepAndSendIn(QString input)
     }
 }
 
-void TextParser::prepAndSendOut(QString message)
+void TextParser::prepAndSendOut(QString& message)
 {
     //FIXME: it can make errors i think
     if (message.contains("PRIVMSG")) {

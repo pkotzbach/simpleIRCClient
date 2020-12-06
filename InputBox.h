@@ -16,7 +16,8 @@ public slots:
     void buttonClicked();
 
 signals:
-    void newMessageIB(QString message, GLOBAL::Dest dest);
+    void newMessageIB(QString& message, GLOBAL::Dest dest);
+    void newMessageIB(QString message);
 
 };
 

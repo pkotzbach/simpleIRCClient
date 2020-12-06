@@ -11,7 +11,10 @@ void InputBox::buttonClicked()
         qDebug() << "IB::buttonClicked, message:" << toPlainText();
     }
 
-    emit newMessageIB(toPlainText(), GLOBAL::Dest::in);
+    QString temp(toPlainText());
+
+    emit newMessageIB(temp);
+    emit newMessageIB(temp, GLOBAL::Dest::in);
 
     clear();
 }

@@ -7,7 +7,7 @@ ConnectionManager::ConnectionManager()
     socket = new QTcpSocket(this);
     timer = new QTimer(this);
 
-    connect(timer, &QTimer::timeout, [=]() { writeToSocket("PING ping"); });
+    connect(timer, &QTimer::timeout, [=]() { writeToSocket(sPing); });
     timer->start(100000);
 
     connect(socket, SIGNAL(readyRead()), this, SLOT(readFromSocket()));
@@ -19,13 +19,13 @@ ConnectionManager::ConnectionManager()
     );
 }
 
-void ConnectionManager::receiveCommand(QStringList commandList, QString command)
+void ConnectionManager::receiveCommand(QStringList& commandList, QString& command)
 {
     if (commandList.at(0).compare(QString("connect")) == 0 || commandList.at(0).compare(QString("c")) == 0){
         if (checkIP(commandList.at(1))) {
             connectToHost(commandList.at(1), GLOBAL::defaultPort);
         }
-        else emit CMError(QString("Invalid IP"));
+        else emit CMError(sError);
     }
     else if (commandList.at(0).compare(QString("disconnect")) == 0){
         socket->disconnectFromHost();
@@ -40,7 +40,7 @@ void ConnectionManager::receiveCommand(QStringList commandList, QString command)
     else writeToSocket(command);
 }
 
-void ConnectionManager::receiveMessage(QString message, GLOBAL::Dest dest)
+void ConnectionManager::receiveMessage(QString& message, GLOBAL::Dest dest)
 {
     if (dest == GLOBAL::Dest::out) emit newMessageOut(message, GLOBAL::Dest::out);
     if (dest == GLOBAL::Dest::in && socket->isWritable()) writeToSocket(message);
@@ -57,7 +57,7 @@ void ConnectionManager::readFromSocket()
     }
 }
 
-void ConnectionManager::writeToSocket(QString message)
+void ConnectionManager::writeToSocket(QString& message)
 {
     //in case we forgot to check
     if (socket->isWritable()){
@@ -72,10 +72,10 @@ void ConnectionManager::writeToSocket(QString message)
         qDebug() << socket->bytesToWrite();
         qDebug() << "WRITTEN" << a << "BYTES";
     }
-    else emit CMError("I can't write to socket!");
+    else emit CMError(sError);
 }
 
-void ConnectionManager::connectToHost(QString ip, int port)
+void ConnectionManager::connectToHost(const QString& ip, int port)
 {
     socket->connectToHost(ip, port);
     socket->waitForConnected();
