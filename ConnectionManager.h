@@ -16,7 +16,7 @@ public:
     static const int bufforSize = 1024;
 
 public slots:
-    void receiveCommand(QString command, QString argument = NULL);
+    void receiveCommand(QStringList commandList, QString command);
     void receiveMessage(QString message, GLOBAL::Dest dest);
 
 private slots:

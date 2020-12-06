@@ -30,8 +30,8 @@ void Application::newInstance()
             text_parser, SLOT(transportMessage(QString, GLOBAL::Dest)));
 
     //text parser to connection manager
-    connect(text_parser, SIGNAL(commandSend(QString, QString)),
-            connection_manager, SLOT(receiveCommand(QString, QString)));
+    connect(text_parser, SIGNAL(commandSend(QStringList, QString)),
+            connection_manager, SLOT(receiveCommand(QStringList, QString)));
     connect(text_parser, SIGNAL(messageSendIn(QString, GLOBAL::Dest)),
             connection_manager, SLOT(receiveMessage(QString, GLOBAL::Dest)));
 

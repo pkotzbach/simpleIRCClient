@@ -19,33 +19,25 @@ ConnectionManager::ConnectionManager()
     );
 }
 
-//FIXME!!!! this is bad
-void ConnectionManager::receiveCommand(QString command, QString argument)
+void ConnectionManager::receiveCommand(QStringList commandList, QString command)
 {
-    //FIXME: i don't think that doing it this way is proper
-    if (command.compare(QString("connect")) == 0 || command.compare(QString("c")) == 0){
-        if (checkIP(argument)) {
-            connectToHost(argument, GLOBAL::defaultPort);
+    if (commandList.at(0).compare(QString("connect")) == 0 || commandList.at(0).compare(QString("c")) == 0){
+        if (checkIP(commandList.at(1))) {
+            connectToHost(commandList.at(1), GLOBAL::defaultPort);
         }
         else emit CMError(QString("Invalid IP"));
     }
-    else if (command.compare(QString("disconnect")) == 0){
+    else if (commandList.at(0).compare(QString("disconnect")) == 0){
         socket->disconnectFromHost();
         socket->waitForDisconnected();
     }
-    else if (command.compare(QString("join")) == 0){
-        options.channel = argument;
+    else if (commandList.at(0).compare(QString("join")) == 0){
+        options.channel = commandList.at(1);
         emit optionsChanged(options);
 
-        writeToSocket(command + " " + argument);
+        writeToSocket(command);
     }
-    else if (command.compare(QString("ping")) == 0){
-        writeToSocket(command + " " + argument);
-    }
-    else if (command.compare(QString("unban")) == 0)
-        writeToSocket("privmsg candide unbanme");
-
-    else emit CMError(QString("Invalid command"));
+    else writeToSocket(command);
 }
 
 void ConnectionManager::receiveMessage(QString message, GLOBAL::Dest dest)
@@ -80,6 +72,7 @@ void ConnectionManager::writeToSocket(QString message)
         qDebug() << socket->bytesToWrite();
         qDebug() << "WRITTEN" << a << "BYTES";
     }
+    else emit CMError("I can't write to socket!");
 }
 
 void ConnectionManager::connectToHost(QString ip, int port)

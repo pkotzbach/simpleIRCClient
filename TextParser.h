@@ -16,7 +16,7 @@ public slots:
     void getOptions(GLOBAL::Options options);
 
 signals:
-    void commandSend(QString command, QString argument);
+    void commandSend(QStringList command, QString argument);
     void messageSendIn(QString message, GLOBAL::Dest dest);
     void messageSendOut(QString message, GLOBAL::Dest dest);
 

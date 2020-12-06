@@ -21,14 +21,12 @@ void TextParser::prepAndSendIn(QString input)
 {
     if (input.startsWith(GLOBAL::commandChar)) {
         input.remove(0, 1);
-        auto parts = input.split(QString(" "), Qt::SkipEmptyParts);
 
-        if (parts.size() == 2)
-            emit commandSend(parts[0], parts[1]);
-        //FIXME: else
+        emit commandSend(input.split(QString(" "), Qt::SkipEmptyParts), input);
     }
     else {
         input.prepend(QString("privmsg ") + options.channel + QString(" :")); //FIXME
+        qDebug() << input;
         emit messageSendIn(input, GLOBAL::Dest::in);
     }
 }
