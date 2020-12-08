@@ -12,7 +12,7 @@ MainWidget::MainWidget(QMainWindow* parent) : QWidget(parent)
     chat_box->setGeometry(10, 10, 780, 490);
 
     send_message_button->setGeometry(520, 510, 110, 40);
-    send_message_button->setText("Wyslij");
+    send_message_button->setText("Send");
 
     connect(send_message_button, SIGNAL(clicked()), input_box, SLOT(buttonClicked()));
     connect(input_box, SIGNAL(newMessageIB(QString&, GLOBAL::Dest)),
