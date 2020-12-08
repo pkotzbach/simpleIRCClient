@@ -11,6 +11,7 @@ class InputBox : public QTextEdit
     Q_OBJECT
 public:
     InputBox(QWidget* parent);
+    void keyPressEvent(QKeyEvent* event);
 
 public slots:
     void buttonClicked();
@@ -18,7 +19,6 @@ public slots:
 signals:
     void newMessageIB(QString& message, GLOBAL::Dest dest);
     void newMessageIB(QString message);
-
 };
 
 #endif // INPUTBOX_H
