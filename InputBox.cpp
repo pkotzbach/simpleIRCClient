@@ -7,12 +7,15 @@ InputBox::InputBox(QWidget* parent) : QTextEdit(parent)
 
 void InputBox::keyPressEvent(QKeyEvent *event)
     {
-        if (event->key() == Qt::Key_Return) //enter
-        {
+        if (event->key() == Qt::Key_Return) {
+            //enter
             buttonClicked();
         }
-        else
-        {
+        else if (event->key() == Qt::Key_Up) {
+            setPlainText(prevMessage);
+            moveCursor(QTextCursor::End);
+        }
+        else {
             QTextEdit::keyPressEvent(event);
         }
     }
@@ -24,6 +27,7 @@ void InputBox::buttonClicked()
     }
 
     QString temp(toPlainText());
+    prevMessage = temp;
 
     emit newMessageIB(temp);
     emit newMessageIB(temp, GLOBAL::Dest::in);

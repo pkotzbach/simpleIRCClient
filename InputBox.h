@@ -19,6 +19,9 @@ public slots:
 signals:
     void newMessageIB(QString& message, GLOBAL::Dest dest);
     void newMessageIB(QString message);
+
+private:
+    QString prevMessage;
 };
 
 #endif // INPUTBOX_H
