@@ -24,6 +24,8 @@ private slots:
     void parseMyNewMessage(QString message);
 
 private:
+    bool exeWindowCommands(QString& message);
+
     QTextBrowser* chat_box;
     InputBox* input_box;
     QPushButton* send_message_button;

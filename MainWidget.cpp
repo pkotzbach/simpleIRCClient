@@ -26,9 +26,10 @@ MainWidget::MainWidget(QMainWindow* parent) : QWidget(parent)
 
 void MainWidget::gotMessage(QString& message, GLOBAL::Dest dest)
 {
-    if (message.compare(QString("/clear")) == 0) chat_box->clear(); //FIXME
-    else if (dest == GLOBAL::Dest::in) emit newMessageIn(message, dest);
-    else if (dest == GLOBAL::Dest::out) emit newMessageOut(message);
+    if (!exeWindowCommands(message)){
+        if (dest == GLOBAL::Dest::in) emit newMessageIn(message, dest);
+        else if (dest == GLOBAL::Dest::out) emit newMessageOut(message);
+    }
 }
 
 //FIXME
@@ -38,4 +39,14 @@ void MainWidget::parseMyNewMessage(QString message)
     message.append("\n");
 
     emit newMessageOut(message);
+}
+
+bool MainWidget::exeWindowCommands(QString& message)
+{
+    if (message.compare(QString("/clear")) == 0) {
+        chat_box->clear();
+        return 1;
+    }
+    return 0;
+
 }
