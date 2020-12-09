@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "Global.h"
+#include "Options.h"
 
 class TextParser : public QObject
 {
@@ -10,10 +11,10 @@ class TextParser : public QObject
 public:
     TextParser();
     ~TextParser() { }
+    void setOptions(Options* op) { options = op; }
 
 public slots:
     void transportMessage(QString& message, GLOBAL::Dest dest);
-    void getOptions(GLOBAL::Options options);
 
 signals:
     void commandSend(QStringList& command, QString& argument);
@@ -24,7 +25,7 @@ private:
     void prepAndSendIn(QString& input);
     void prepAndSendOut(QString& message);
 
-    GLOBAL::Options options;
+    Options* options;
 };
 
 #endif // TEXTPARSER_H

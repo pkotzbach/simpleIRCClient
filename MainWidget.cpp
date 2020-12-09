@@ -26,6 +26,7 @@ MainWidget::MainWidget(QMainWindow* parent) : QWidget(parent)
 
 void MainWidget::gotMessage(QString& message, GLOBAL::Dest dest)
 {
+    chat_box->moveCursor(QTextCursor::End);
     if (!exeWindowCommands(message)){
         if (dest == GLOBAL::Dest::in) emit newMessageIn(message, dest);
         else if (dest == GLOBAL::Dest::out) emit newMessageOut(message);
@@ -35,7 +36,7 @@ void MainWidget::gotMessage(QString& message, GLOBAL::Dest dest)
 //FIXME
 void MainWidget::parseMyNewMessage(QString message)
 {
-    message.prepend(QString::fromStdString("<" + GLOBAL::nick + ">: "));
+    message.prepend(QString::fromStdString("<" + options->getNick() + ">: "));
     message.append("\n");
 
     emit newMessageOut(message);

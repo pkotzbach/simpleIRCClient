@@ -7,6 +7,7 @@ Application::Application(int &argc, char **argv)
     main_window = nullptr;
     text_parser = nullptr;
     connection_manager = nullptr;
+    options = nullptr;
 }
 
 Application::~Application()
@@ -14,6 +15,7 @@ Application::~Application()
     delete main_window;
     delete text_parser;
     delete connection_manager;
+    delete options;
 }
 
 void Application::newInstance()
@@ -24,6 +26,13 @@ void Application::newInstance()
 
     text_parser = new TextParser();
     connection_manager = new ConnectionManager();
+
+    //options
+    options = new Options();
+    text_parser->setOptions(options);
+    connection_manager->setOptions(options);
+    static_cast<MainWidget*>(main_window->centralWidget())->setOptions(options);
+
 
     //connections INPUT
     //widget to text parser
@@ -44,8 +53,4 @@ void Application::newInstance()
     //text parser to widget
     connect(text_parser, SIGNAL(messageSendOut(QString&, GLOBAL::Dest)),
             main_window->centralWidget(), SLOT(gotMessage(QString&, GLOBAL::Dest)));
-
-    //options from connection manager to text parser
-    connect(connection_manager, SIGNAL(optionsChanged(GLOBAL::Options)),
-            text_parser, SLOT(getOptions(GLOBAL::Options)));
 }

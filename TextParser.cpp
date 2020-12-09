@@ -4,7 +4,6 @@
 
 TextParser::TextParser()
 {
-    options.channel = ""; //FIXME: GLOBAL::defaultchannel
 }
 
 void TextParser::transportMessage(QString& message, GLOBAL::Dest dest)
@@ -26,7 +25,7 @@ void TextParser::prepAndSendIn(QString& input)
         emit commandSend(temp, input);
     }
     else {
-        input.prepend(QString("privmsg ") + options.channel + QString(" :")); //FIXME
+        input.prepend(QString("privmsg ") + options->getChannel() + QString(" :")); //FIXME
         qDebug() << input;
         emit messageSendIn(input, GLOBAL::Dest::in);
     }
@@ -37,16 +36,10 @@ void TextParser::prepAndSendOut(QString& message)
     //FIXME: it can make errors i think
     if (message.contains("PRIVMSG")) {
         QRegularExpression re("(?<=\\:)(.*?)(?=\\!)"); //get nick
-        QRegularExpression re1("(?<=" + options.channel + ").*"); //get message
+        QRegularExpression re1("(?<=" + options->getChannel() + ").*"); //get message
         message = "<" + re.match(message).captured() + ">" + re1.match(message).captured().remove(0, 2).prepend(": ");
     }
-    emit messageSendOut(message, GLOBAL::Dest::out);
-}
 
-
-void TextParser::getOptions(GLOBAL::Options options)
-{
-    this->options = options;
-    //debug print
-    qDebug() << "CHANNEL: " << options.channel;
+    if (!message.contains("freenode.net :ping")) //FIXME
+        emit messageSendOut(message, GLOBAL::Dest::out);
 }

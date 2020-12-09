@@ -6,6 +6,7 @@
 #include <QTcpSocket>
 
 #include "Global.h"
+#include "Options.h"
 
 class ConnectionManager : public QObject
 {
@@ -14,6 +15,7 @@ public:
     ConnectionManager();
     ~ConnectionManager() { }
     static const int bufforSize = 1024;
+    void setOptions(Options* op) { options = op; }
 
 public slots:
     void receiveCommand(QStringList& commandList, QString& command);
@@ -26,14 +28,13 @@ private slots:
 signals:
     void CMError(QString& error);
     void newMessageOut(QString& message, GLOBAL::Dest dest);
-    void optionsChanged(GLOBAL::Options options);
 
 private:
     bool checkIP(const QString& ip) { return 1; } //FIXME
     void connectToHost(const QString& ip, int port);
     void writeToSocket(QString& message);
 
-    GLOBAL::Options options;
+    Options* options;
     QTcpSocket* socket;
     QTimer* timer;
 
