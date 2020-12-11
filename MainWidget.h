@@ -17,6 +17,7 @@ public:
     explicit MainWidget(QMainWindow* parent = nullptr);
     void setOptions(Options* op) { options = op; }
     InputBox* getInputBox() { return input_box; }
+    QTextBrowser* getChatBox() { return chat_box; }
 
 signals:
     void newMessageOut(QString message);
@@ -26,8 +27,6 @@ private slots:
     void parseMyNewMessage(QString message);
 
 private:
-    bool exeWindowCommands(QString& message);
-
     QTextBrowser* chat_box;
     InputBox* input_box;
     QPushButton* send_message_button;

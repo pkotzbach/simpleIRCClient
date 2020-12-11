@@ -18,26 +18,6 @@ ConnectionManager::ConnectionManager()
     );
 }
 
-void ConnectionManager::receiveCommand(QStringList& commandList, QString& command)
-{
-    if (commandList.at(0).compare(QString("connect")) == 0 || commandList.at(0).compare(QString("c")) == 0){
-        if (checkIP(commandList.at(1))) {
-            connectToHost(commandList.at(1), options->getPort());
-        }
-        else emit CMError(sError);
-    }
-    else if (commandList.at(0).compare(QString("disconnect")) == 0){
-        socket->disconnectFromHost();
-        socket->waitForDisconnected();
-    }
-    else if (commandList.at(0).compare(QString("join")) == 0){
-        options->channel = commandList.at(1);
-
-        writeToSocket(command);
-    }
-    else writeToSocket(command);
-}
-
 void ConnectionManager::receiveMessage(QString& message, GLOBAL::Dest dest)
 {
     if (dest == GLOBAL::Dest::out) emit newMessageOut(message, GLOBAL::Dest::out);
@@ -79,6 +59,12 @@ void ConnectionManager::connectToHost(const QString& ip, int port)
     socket->waitForConnected();
     socket->write(&std::string("NICK " + options->getNick() + "\r\n")[0]); //a bit tricky, but i wanna have char array here, tbh i don't know why this is working
     socket->write("USER IRCIRC * * :IRCIRC\r\n");
+}
+
+void ConnectionManager::disconnectFromHost()
+{
+    socket->disconnectFromHost();
+    socket->waitForDisconnected();
 }
 
 

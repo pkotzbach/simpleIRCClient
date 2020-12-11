@@ -4,6 +4,7 @@
 
 TextParser::TextParser()
 {
+    options = nullptr;
 }
 
 void TextParser::transportMessage(QString& message, GLOBAL::Dest dest)

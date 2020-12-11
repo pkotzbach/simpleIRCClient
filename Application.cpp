@@ -8,6 +8,7 @@ Application::Application(int &argc, char **argv)
     text_parser = nullptr;
     connection_manager = nullptr;
     options = nullptr;
+    command_centre = nullptr;
 }
 
 Application::~Application()
@@ -16,6 +17,7 @@ Application::~Application()
     delete text_parser;
     delete connection_manager;
     delete options;
+    delete command_centre;
 }
 
 void Application::newInstance()
@@ -26,11 +28,13 @@ void Application::newInstance()
 
     text_parser = new TextParser();
     connection_manager = new ConnectionManager();
+    command_centre = new CommandCentre(static_cast<MainWidget*>(main_window->centralWidget()), connection_manager);
 
     //options
     options = new Options();
     text_parser->setOptions(options);
     connection_manager->setOptions(options);
+    command_centre->setOptions(options);
     static_cast<MainWidget*>(main_window->centralWidget())->setOptions(options);
 
 
@@ -39,9 +43,11 @@ void Application::newInstance()
     connect(static_cast<MainWidget*>(main_window->centralWidget())->getInputBox(), SIGNAL(newMessageIB(QString&, GLOBAL::Dest)),
             text_parser, SLOT(transportMessage(QString&, GLOBAL::Dest)));
 
-    //text parser to connection manager
+    //text parser to command centre
     connect(text_parser, SIGNAL(commandSend(QStringList&, QString&)),
-            connection_manager, SLOT(receiveCommand(QStringList&, QString&)));
+            command_centre, SLOT(receiveCommand(QStringList&, QString&)));
+
+    //text parser to connection manager
     connect(text_parser, SIGNAL(messageSendIn(QString&, GLOBAL::Dest)),
             connection_manager, SLOT(receiveMessage(QString&, GLOBAL::Dest)));
 

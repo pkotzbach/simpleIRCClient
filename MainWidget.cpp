@@ -36,15 +36,6 @@ void MainWidget::parseMyNewMessage(QString message)
     message.prepend(QString::fromStdString("<" + options->getNick() + ">: "));
     message.append("\n");
 
+    chat_box->moveCursor(QTextCursor::End);
     emit newMessageOut(message);
-}
-
-bool MainWidget::exeWindowCommands(QString& message)
-{
-    if (message.compare(QString("/clear")) == 0) {
-        chat_box->clear();
-        return 1;
-    }
-    return 0;
-
 }

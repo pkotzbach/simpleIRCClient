@@ -9,6 +9,7 @@
 #include "ConnectionManager.h"
 #include "Global.h"
 #include "Options.h"
+#include "CommandCentre.h"
 
 class Application : public QApplication
 {
@@ -23,6 +24,7 @@ private:
     QPointer<MainWindow> main_window;
     QPointer<TextParser> text_parser;
     QPointer<ConnectionManager> connection_manager;
+    QPointer<CommandCentre> command_centre;
     Options* options; //should it be here?
 };
 

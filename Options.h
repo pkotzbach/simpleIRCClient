@@ -5,7 +5,7 @@
 
 class Options
 {
-    friend class ConnectionManager;
+    friend class CommandCentre;
 public:
     Options();
     ~Options() { }

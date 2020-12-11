@@ -14,11 +14,15 @@ class ConnectionManager : public QObject
 public:
     ConnectionManager();
     ~ConnectionManager() { }
+
     static const int bufforSize = 1024;
+
     void setOptions(Options* op) { options = op; }
+    void connectToHost(const QString& ip, int port);
+    void disconnectFromHost();
+    void writeToSocket(QString& message);
 
 public slots:
-    void receiveCommand(QStringList& commandList, QString& command);
     void receiveMessage(QString& message, GLOBAL::Dest dest);
 
 private slots:
@@ -31,8 +35,6 @@ signals:
 
 private:
     bool checkIP(const QString& ip) { return 1; } //FIXME
-    void connectToHost(const QString& ip, int port);
-    void writeToSocket(QString& message);
 
     Options* options;
     QTcpSocket* socket;
