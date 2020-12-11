@@ -35,8 +35,8 @@ void Application::newInstance()
 
 
     //connections INPUT
-    //widget to text parser
-    connect(main_window->centralWidget(), SIGNAL(newMessageIn(QString&, GLOBAL::Dest)),
+    //input box to text parser
+    connect(static_cast<MainWidget*>(main_window->centralWidget())->getInputBox(), SIGNAL(newMessageIB(QString&, GLOBAL::Dest)),
             text_parser, SLOT(transportMessage(QString&, GLOBAL::Dest)));
 
     //text parser to connection manager

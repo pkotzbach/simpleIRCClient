@@ -15,8 +15,8 @@ MainWidget::MainWidget(QMainWindow* parent) : QWidget(parent)
     send_message_button->setText("Send");
 
     connect(send_message_button, SIGNAL(clicked()), input_box, SLOT(buttonClicked()));
-    connect(input_box, SIGNAL(newMessageIB(QString&, GLOBAL::Dest)),
-            this, SLOT(gotMessage(QString&, GLOBAL::Dest)));
+//    connect(input_box, SIGNAL(newMessageIB(QString&, GLOBAL::Dest)),
+//            this, SLOT(gotMessage(QString&, GLOBAL::Dest)));
     connect(input_box, SIGNAL(newMessageIB(QString)),
             this, SLOT(parseMyNewMessage(QString)));
 
@@ -27,10 +27,7 @@ MainWidget::MainWidget(QMainWindow* parent) : QWidget(parent)
 void MainWidget::gotMessage(QString& message, GLOBAL::Dest dest)
 {
     chat_box->moveCursor(QTextCursor::End);
-    if (!exeWindowCommands(message)){
-        if (dest == GLOBAL::Dest::in) emit newMessageIn(message, dest);
-        else if (dest == GLOBAL::Dest::out) emit newMessageOut(message);
-    }
+    emit newMessageOut(message);
 }
 
 //FIXME

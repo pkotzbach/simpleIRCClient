@@ -16,9 +16,9 @@ class MainWidget : public QWidget
 public:
     explicit MainWidget(QMainWindow* parent = nullptr);
     void setOptions(Options* op) { options = op; }
+    InputBox* getInputBox() { return input_box; }
 
 signals:
-    void newMessageIn(QString& message, GLOBAL::Dest dest);
     void newMessageOut(QString message);
 
 private slots:
