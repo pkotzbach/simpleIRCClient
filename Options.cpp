@@ -3,6 +3,6 @@
 Options::Options()
 {
     port = 6667;
-    nick = "IRCIRCIRC";
+    nick = GLOBAL::default_nick;
     channel = "";
 }

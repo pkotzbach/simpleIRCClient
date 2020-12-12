@@ -2,9 +2,11 @@
 #define OPTIONS_H
 
 #include <QObject>
+#include "Global.h"
 
 class Options
 {
+    friend class OptionsReader;
     friend class CommandCentre;
 public:
     Options();

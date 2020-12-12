@@ -9,6 +9,7 @@ Application::Application(int &argc, char **argv)
     connection_manager = nullptr;
     options = nullptr;
     command_centre = nullptr;
+    options_reader = nullptr;
 }
 
 Application::~Application()
@@ -18,6 +19,7 @@ Application::~Application()
     delete connection_manager;
     delete options;
     delete command_centre;
+    delete options_reader;
 }
 
 void Application::newInstance()
@@ -36,6 +38,10 @@ void Application::newInstance()
     connection_manager->setOptions(options);
     command_centre->setOptions(options);
     static_cast<MainWidget*>(main_window->centralWidget())->setOptions(options);
+
+    options_reader = new OptionsReader();
+    options_reader->setOptions(options);
+    options_reader->readOptions();
 
 
     //connections INPUT

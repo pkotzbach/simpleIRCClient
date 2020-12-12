@@ -8,7 +8,7 @@ namespace GLOBAL
     const bool debug = 1;
 
 //    const int defaultPort = 6667;
-//    const std::string nick = "IRCIRCIRC";
+    const std::string default_nick = "IRCIRCIRC";
 
     enum Dest {in, out};
 }

@@ -10,6 +10,7 @@
 #include "Global.h"
 #include "Options.h"
 #include "CommandCentre.h"
+#include "OptionsReader.h"
 
 class Application : public QApplication
 {
@@ -26,6 +27,7 @@ private:
     QPointer<ConnectionManager> connection_manager;
     QPointer<CommandCentre> command_centre;
     Options* options; //should it be here?
+    QPointer<OptionsReader> options_reader;
 };
 
 #endif // APPLICATION_H

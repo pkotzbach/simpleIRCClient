@@ -1,7 +1,14 @@
 #include "CommandCentre.h"
+#include "OptionsReader.h"
 
 void CommandCentre::receiveCommand(QStringList& commandList, QString& command)
 {
+    if (commandList.at(0).compare(QString("read")) == 0) { //IT'S ONLY FOR DEBUG
+        OptionsReader* optr = new OptionsReader(this);
+        optr->setOptions(options);
+        optr->readOptions();
+        delete optr;
+    }
     if (commandList.at(0).compare(QString("clear")) == 0 ) {
         main_widget->getChatBox()->clear();
     }
