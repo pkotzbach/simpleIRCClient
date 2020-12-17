@@ -21,7 +21,8 @@ signals:
     void newMessageIB(QString message);
 
 private:
-    QString prevMessage;
+    QStringList prevMessages;
+    int prevMessagesPos;
 };
 
 #endif // INPUTBOX_H
