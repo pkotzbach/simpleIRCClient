@@ -14,7 +14,7 @@ ConnectionManager::ConnectionManager()
     connect(socket, SIGNAL(errorOccurred(QAbstractSocket::SocketError)), this, SLOT(handleError(QAbstractSocket::SocketError)));
     connect(
         socket, &QTcpSocket::stateChanged,
-        [=](QAbstractSocket::SocketState socketState) { qDebug() << "STATE:" << socketState; }
+        [=](QAbstractSocket::SocketState socketState) { qDebug() << "STATE:" << socketState; emit stateChanged(socketState); }
     );
 }
 

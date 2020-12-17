@@ -38,11 +38,11 @@ void Application::newInstance()
     connection_manager->setOptions(options);
     command_centre->setOptions(options);
     static_cast<MainWidget*>(main_window->centralWidget())->setOptions(options);
+    main_window->setOptions(options);
 
     options_reader = new OptionsReader();
     options_reader->setOptions(options);
     options_reader->readOptions();
-
 
     //connections INPUT
     //input box to text parser
@@ -65,4 +65,8 @@ void Application::newInstance()
     //text parser to widget
     connect(text_parser, SIGNAL(messageSendOut(QString&, GLOBAL::Dest)),
             main_window->centralWidget(), SLOT(gotMessage(QString&, GLOBAL::Dest)));
+
+    //connection manager to status bar
+    connect(connection_manager, SIGNAL(stateChanged(int)),
+            main_window, SLOT(socketStateChanged(int)));
 }

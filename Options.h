@@ -15,11 +15,13 @@ public:
     int getPort() { return port; }
     std::string getNick() { return nick; }
     QString getChannel() { return channel; }
+    QString getServer() { return server; }
 
 private:
     int port;
     std::string nick;
     QString channel;
+    QString server;
 };
 
 #endif // OPTIONS_H

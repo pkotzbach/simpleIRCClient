@@ -32,6 +32,7 @@ private slots:
 signals:
     void CMError(QString& error);
     void newMessageOut(QString& message, GLOBAL::Dest dest);
+    void stateChanged(int socketState);
 
 private:
     bool checkIP(const QString& ip) { return 1; } //FIXME
