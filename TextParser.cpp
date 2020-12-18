@@ -26,7 +26,7 @@ void TextParser::prepAndSendIn(QString& input)
         emit commandSend(temp, input);
     }
     else {
-        input.prepend(QString("privmsg ") + options->getChannel() + QString(" :")); //FIXME
+        input.prepend(QString("PRIVMSG ") + options->getChannel() + QString(" :")); //FIXME
         qDebug() << input;
         emit messageSendIn(input, GLOBAL::Dest::in);
     }
@@ -35,7 +35,7 @@ void TextParser::prepAndSendIn(QString& input)
 void TextParser::prepAndSendOut(QString& message)
 {
     //FIXME: it can make errors i think
-    if (message.contains("PRIVMSG")) {
+    if (message.contains("PRIVMSG") || message.contains("privmsg")) {
         QRegularExpression re("(?<=\\:)(.*?)(?=\\!)"); //get nick
         QRegularExpression re1("(?<=" + options->getChannel() + ").*"); //get message
         message = "<" + re.match(message).captured() + ">" + re1.match(message).captured().remove(0, 2).prepend(": ");
