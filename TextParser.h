@@ -17,7 +17,7 @@ public slots:
     void transportMessage(QString& message, GLOBAL::Dest dest);
 
 signals:
-    void commandSend(QStringList& command, QString& argument);
+    void commandSend(QStringList& commandList, QString& fullCommand);
     void messageSendIn(QString& message, GLOBAL::Dest dest);
     void messageSendOut(QString& message, GLOBAL::Dest dest);
 
