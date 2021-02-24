@@ -22,6 +22,8 @@ public:
     void disconnectFromHost();
     void writeToSocket(QString& message);
 
+    bool isConnected() { return socket->state() == QAbstractSocket::ConnectedState; }
+
 public slots:
     void receiveMessage(QString& message, GLOBAL::Dest dest);
 

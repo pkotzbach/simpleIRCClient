@@ -13,10 +13,13 @@ void CommandCentre::receiveCommand(QStringList& commandList, QString& command)
         main_widget->getChatBox()->clear();
     }
     else if (commandList.at(0).compare(QString("connect")) == 0 || commandList.at(0).compare(QString("c")) == 0){
-        options->server = commandList.at(1); //we don't care if there is saved server name even if we aren't connected
+        if (commandList.size() > 1) {
+            if (connection_manager->isConnected())
+                connection_manager->disconnectFromHost();
 
-        if (commandList.size() > 1)
+            options->server = commandList.at(1);
             connection_manager->connectToHost(commandList.at(1), options->getPort());
+        }
     }
     else if (commandList.at(0).compare(QString("disconnect")) == 0){
         connection_manager->disconnectFromHost();
