@@ -11,12 +11,7 @@ CommandCentre::CommandCentre(MainWidget* mw, ConnectionManager* cm)
 void CommandCentre::receiveCommand(QStringList& commandList, QString& fullCommand)
 {
     entered_command = commandList.at(0);
-    if (commandList.at(0).compare(QString("read")) == 0) { //IT'S ONLY FOR DEBUG
-        OptionsReader* optr = new OptionsReader(this);
-        optr->setOptions(options);
-        optr->readOptions();
-        delete optr;
-    }
+
     if (isEnteredCommand("clear")) {
         main_widget->getChatBox()->clear();
     }
