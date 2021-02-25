@@ -6,5 +6,6 @@ Simple IRC Client made for eductional purposes. It was my first touch with QT, s
 - /connect, /c - connect to server (e.g. /c irc.freenode.net)
 - /disconnect - disconnect from server
 - /clear - clear messages in chatbox
+- /displaycon - turn on/off messages about connections to channel
 
 ![Screenshot](https://i.imgur.com/yOP2g8f.png)
