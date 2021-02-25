@@ -8,7 +8,8 @@ OptionsReader::OptionsReader(QObject *parent) : QObject(parent)
 
     if (!exist) {
         qDebug() << "CREATED OPTIONS FILE";
-        file->write(&std::string("NICK:" + GLOBAL::default_nick)[0]);
+        file->write(&std::string("NICK:" + GLOBAL::default_nick + "\n")[0]);
+        file->write(&std::string("DISPLAY_CONNECTIONS:FALSE\n")[0]);
     }
 
     if (file->exists()) qDebug() << "LOADED OPTIONS FILE";
@@ -29,7 +30,12 @@ void OptionsReader::applyOptions(QString& data)
     QString opt(data.split(":").at(0));
     data = data.split(":").at(1).simplified();
 
-    if (opt.compare(QString("NICK")) == 0 ) {
+    if (opt.compare(QString("NICK")) == 0) {
         options->nick = data.toStdString();
+    }
+    if (opt.compare(QString("DISPLAY_CONNECTIONS") == 0)) {
+       if (data.compare(QString("TRUE") == 0)) options->display_connections = true;
+       else if (data.compare(QString("FALSE") == 0)) options->display_connections = false;
+       //FIXME: else error
     }
 }

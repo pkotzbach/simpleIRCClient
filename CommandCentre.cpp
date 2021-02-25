@@ -35,5 +35,8 @@ void CommandCentre::receiveCommand(QStringList& commandList, QString& fullComman
         if (commandList.size() > 1) options->nick = commandList.at(1).toStdString();
         connection_manager->writeToSocket(fullCommand);
     }
+    else if (isEnteredCommand("displaycon")) {
+        options->displayConnections()? options->display_connections = false: options->display_connections = true;
+    }
     else connection_manager->writeToSocket(fullCommand);
 }

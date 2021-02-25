@@ -17,11 +17,15 @@ public:
     QString getChannel() { return channel; }
     QString getServer() { return server; }
 
+    bool displayConnections() { return display_connections; }
+
 private:
     int port;
     std::string nick;
     QString channel;
     QString server;
+
+    bool display_connections;
 };
 
 #endif // OPTIONS_H

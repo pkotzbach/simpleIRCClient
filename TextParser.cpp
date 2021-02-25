@@ -35,12 +35,22 @@ void TextParser::prepAndSendIn(QString& input)
 void TextParser::prepAndSendOut(QString& message)
 {
     //FIXME: it can make errors i think
-    if (message.contains("PRIVMSG") || message.contains("privmsg")) {
+    if (message.contains("PRIVMSG", Qt::CaseInsensitive)) {
         QRegularExpression re("(?<=\\:)(.*?)(?=\\!)"); //get nick
         QRegularExpression re1("(?<=" + options->getChannel() + ").*"); //get message
         message = "<" + re.match(message).captured() + ">" + re1.match(message).captured().remove(0, 2).prepend(": ");
+        emit messageSendOut(message, GLOBAL::Dest::out);
     }
 
-    if (!message.contains("freenode.net :ping")) //FIXME
+    else if (shouldDisplay(message))
         emit messageSendOut(message, GLOBAL::Dest::out);
+}
+
+bool TextParser::shouldDisplay(QString& message)
+{
+    if (message.contains("PONG", Qt::CaseInsensitive)) return false;
+    if (!options->displayConnections() && (message.contains("QUIT", Qt::CaseInsensitive) || message.contains("PART", Qt::CaseInsensitive) || message.contains("JOIN", Qt::CaseInsensitive)))
+        return false;
+
+    return true;
 }

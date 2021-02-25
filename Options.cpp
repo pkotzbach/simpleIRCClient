@@ -6,4 +6,6 @@ Options::Options()
     nick = GLOBAL::default_nick;
     channel = "";
     server = "aaa";
+
+    display_connections = false;
 }

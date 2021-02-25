@@ -25,6 +25,8 @@ private:
     void prepAndSendIn(QString& input);
     void prepAndSendOut(QString& message);
 
+    bool shouldDisplay(QString& message);
+
     Options* options;
 };
 
